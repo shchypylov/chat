@@ -30,10 +30,6 @@ Login = reduxForm({
 
 class Auth extends Component {
 
-	state = {
-		data: {}
-	};
-
 	submitHandle = (data) => {
 		this.props.authUser(data);
 	};

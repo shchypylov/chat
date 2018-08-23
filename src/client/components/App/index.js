@@ -1,26 +1,25 @@
 import React, {Component} from 'react';
+import {Switch, Route, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import cookie from 'react-cookies'
+
 import Home from "../Home";
 import Auth from "../Auth";
-import {Switch, Route} from "react-router-dom";
 import "./index.scss";
 import history from "../../config/history";
 
-const Test = () => {
-	return (
-		<div>Hello,world</div>
-	)
-}
 
 class App extends Component {
 
 	componentDidMount() {
-		let userID = localStorage.getItem("userID");
+		let userID = cookie.load("userID");
 		if (userID) {
 			history.push("/")
 		} else {
 			history.push("login")
 		}
 	}
+
 	render() {
 		return (
 			<Switch>
@@ -31,4 +30,12 @@ class App extends Component {
 	}
 }
 
-export default App
+const mapStateToProps = (state) => {
+	return ({
+		user: state.user
+	})
+}
+
+const mapDispatchToProps = {};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

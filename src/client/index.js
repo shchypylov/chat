@@ -5,6 +5,7 @@ import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 import ReduxThunk from 'redux-thunk'
+
 import history from "./config/history";
 import reduxStore from "./store";
 import App from "./components/App";
@@ -14,10 +15,10 @@ const reduxDevTools =
 const store = createStore(reduxStore, reduxDevTools, applyMiddleware(ReduxThunk));
 
 ReactDOM.render(
-    <Router history={history}>
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    </Router>,
-    document.querySelector("#root")
+	<Router history={history}>
+			<Provider store={store}>
+				<App/>
+			</Provider>
+	</Router>,
+	document.querySelector("#root")
 )

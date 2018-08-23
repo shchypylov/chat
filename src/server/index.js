@@ -1,7 +1,28 @@
 const express = require('express');
-const os = require('os');
-const app = express();
-app.use(express.static('dist'));
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const path = require("path");
 
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
-app.listen(8080, () => console.log('Listening on port 8080!'));
+const {mongo} = require("./db");
+const Router = require("./routes/Router");
+const PORT = process.env.PORT || 8080;
+const db = process.env.MONGOLAB_URI || mongo;
+const buildPath = path.join(__dirname, "../dist");
+
+mongoose.connect(db).then(() => {
+    console.log("--- mongo is up right here: ", db);
+}, (err) => {
+    console.log("--- db error at", err);
+});
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use("/api", Router);
+app.use(express.static(buildPath));
+
+app.listen(PORT, () => console.log('Listening on port 8080!'));

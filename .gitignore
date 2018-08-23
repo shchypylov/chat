@@ -6,3 +6,4 @@ dist
 test
 *.dist
 *.yml
+.env

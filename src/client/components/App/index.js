@@ -1,21 +1,34 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import Home from "../Home";
+import Auth from "../Auth";
+import {Switch, Route} from "react-router-dom";
 import "./index.scss";
+import history from "../../config/history";
+
+const Test = () => {
+	return (
+		<div>Hello,world</div>
+	)
+}
 
 class App extends Component {
-    render() {
-        return (
-            <div>
-                Hello friend
-            </div>
-        );
-    }
+
+	componentDidMount() {
+		let userID = localStorage.getItem("userID");
+		if (userID) {
+			history.push("/")
+		} else {
+			history.push("login")
+		}
+	}
+	render() {
+		return (
+			<Switch>
+				<Route exact path="/" component={Home}/>
+				<Route path="/login" component={Auth}/>
+			</Switch>
+		);
+	}
 }
 
-function mapStateToProps(state) {
-    return {};
-}
-
-export default connect(
-    mapStateToProps,
-)(App);
+export default App

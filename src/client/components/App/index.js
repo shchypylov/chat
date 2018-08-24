@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import cookie from 'react-cookies'
 
 import Home from "../Home";
+import Error from "../Error";
 import Auth from "../Auth";
 import "./index.scss";
 import history from "../../config/history";
@@ -16,23 +17,28 @@ class App extends Component {
 		if (userID) {
 			history.push("/")
 		} else {
-			history.push("login")
+			history.push("/login")
 		}
 	}
 
 	render() {
+		const {error} = this.props;
 		return (
-			<Switch>
-				<Route exact path="/" component={Home}/>
-				<Route path="/login" component={Auth}/>
-			</Switch>
+			<div className="app">
+				<Switch>
+					<Route exact path="/" component={Home}/>
+					<Route path="/login" component={Auth}/>
+				</Switch>
+				<Error data={error}/>
+			</div>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
 	return ({
-		user: state.user
+		user: state.user,
+		error: state.error
 	})
 }
 

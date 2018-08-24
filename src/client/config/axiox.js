@@ -14,6 +14,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(res => {
+	console.log("--- rs", res);
 	return res;
 }, err => {
 	return Promise.reject(err);
